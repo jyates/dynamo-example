@@ -1,9 +1,7 @@
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
+import com.jesseyates.dynamo.AwsUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
@@ -45,7 +43,7 @@ public class TestDynamo {
     }
 
     private static AmazonDynamoDBClient createClient() {
-        AmazonDynamoDBClient client = new AmazonDynamoDBClient(getFakeProvider());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(AwsUtil.getFakeProvider());
         client.setEndpoint("http://localhost:" + port);
         return client;
     }
@@ -60,11 +58,6 @@ public class TestDynamo {
     public static void shutdown() throws Exception {
         server.stop();
         dynamodb.shutdown();
-    }
-
-    private static AWSCredentialsProvider getFakeProvider() {
-        return new StaticCredentialsProvider(
-                new BasicAWSCredentials("AKIAIZFKPYAKBFDZPAEA", "18S1bF4bpjCKZP2KRgbqOn7xJLDmqmwSXqq5GAWq"));
     }
 
 
