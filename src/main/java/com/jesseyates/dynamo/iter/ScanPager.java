@@ -54,7 +54,6 @@ public class ScanPager extends BasePager<ResultOrException<Map<String, Attribute
 
         // return all the values
         queue.addAll(result);
-        batchComplete();
 
         // we dropped off the end of the results that we care about
         if (result.size() < scanResult.getCount() ||
@@ -66,6 +65,7 @@ public class ScanPager extends BasePager<ResultOrException<Map<String, Attribute
           // results
           scan.setExclusiveStartKey(scanResult.getLastEvaluatedKey());
         }
+        batchComplete();
       }
     });
   }
